@@ -10,10 +10,12 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.20",
+    "@types/react-calendar": "^3.5.2",
     "@types/react-dom": "^18.0.6",
     "@types/react-responsive": "^8.0.5",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.8",
+    "react-calendar": "^3.9.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-responsive": "^9.0.0",
@@ -27,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write \"src/**/*.{json,{j,t}s{,x},scss,}\""
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +53,12 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.11",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.16",
+    "prettier": "2.7.1",
     "tailwindcss": "^3.1.8"
   }
 }

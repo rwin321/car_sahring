@@ -1,10 +1,7 @@
-import React from 'react';
-import './App.css';
-import styled from "styled-components";
-import tw from "twin.macro";
-import {HomePage} from "./app/containers/HomePage";
-import NavBar from "./app/components/navbar";
-
+import React from 'react'
+import styled from 'styled-components'
+import tw from 'twin.macro'
+import { HomePage } from './app/containers/HomePage'
 
 const AppContainer = styled.div`
   ${tw`
@@ -14,15 +11,14 @@ const AppContainer = styled.div`
     flex-col
     items-center
   `}
-`;
+`
 
 const App = () => {
   return (
     <AppContainer>
-      <NavBar />
-      <HomePage/>
+      <HomePage />
     </AppContainer>
-  );
+  )
 }
 
-export default App;
+export default App

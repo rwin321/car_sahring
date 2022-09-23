@@ -1,9 +1,13 @@
 import React from 'react'
-import styled from "styled-components";
-import tw from "twin.macro";
+import styled from 'styled-components'
+import tw from 'twin.macro'
+import MclarenCarImg from '../../../assets/images/mclaren-orange-big.png'
+import BlobImg from '../../../assets/images/blob.svg'
+import { SCREENS } from '../../components/responsive'
+import Button from '../../components/button'
 
 const TopSectionContainer = styled.div`
-  min-height: 400px;
+  min-height: 300px;
   margin-top: 6em;
   ${tw`
     w-full
@@ -12,8 +16,7 @@ const TopSectionContainer = styled.div`
     justify-between
     pl-3
     pr-3
-    lg:pl-12
-    lg:pr-12
+    lg:px-12
   `}
 `
 
@@ -66,14 +69,38 @@ const Description = styled.p`
 `
 
 const BlobContainer = styled.div`
+  position: absolute;
   width: 20em;
   height: 10em;
-  position: absolute;
-  right: 5em;
+  right: -5em;
   top: -9em;
   z-index: -1;
   transform: rotate(-30deg);
-  
+
+  @media (min-width: ${SCREENS.sm}) {
+    width: 40em;
+    max-height: 10em;
+    right: -9em;
+    top: -16em;
+    transform: rotate(-25deg);
+  }
+
+  @media (min-width: ${SCREENS.lg}) {
+    width: 50em;
+    max-height: 30em;
+    right: -7em;
+    top: -15em;
+    transform: rotate(-30deg);
+  }
+
+  @media (min-width: ${SCREENS.xl}) {
+    width: 65em;
+    max-height: 30em;
+    right: -15em;
+    top: -19em;
+    transform: rotate(-20deg);
+  }
+
   img {
     width: 100%;
     height: auto;
@@ -81,6 +108,67 @@ const BlobContainer = styled.div`
   }
 `
 
-export const TopSection = () => {
+const StandaloneCar = styled.div`
+  position: absolute;
+  width: auto;
+  height: 10em;
+  right: -6em;
+  top: -5em;
 
+  @media (min-width: ${SCREENS.sm}) {
+    height: 16em;
+    right: -6em;
+    top: -6em;
+  }
+
+  @media (min-width: ${SCREENS.lg}) {
+    height: 21em;
+    right: -9em;
+    top: -5em;
+  }
+
+  @media (min-width: ${SCREENS.xl}) {
+    height: 28em;
+    right: -13em;
+    top: -8em;
+  }
+
+  img {
+    width: auto;
+    height: 100%;
+    max-width: fit-content;
+  }
+`
+
+const ButtonContainer = styled.div`
+  ${tw`
+    flex
+    flex-wrap
+  `}
+`
+
+export const TopSection = () => {
+  return (
+    <TopSectionContainer>
+      <LeftContainer>
+        <Slogan>Rent The Best Quality Car's with Us</Slogan>
+        <Description>
+          You have an opportunity to choose any car from budget ones to the newest modern sport cars
+          for the best price on the market!
+        </Description>
+        <ButtonContainer>
+          <Button text="Book a ride!" theme="outlined" />
+          <Button text="Sell Your Car" theme="filled" />
+        </ButtonContainer>
+      </LeftContainer>
+      <RightContainer>
+        <BlobContainer>
+          <img src={BlobImg} />
+        </BlobContainer>
+        <StandaloneCar>
+          <img src={MclarenCarImg} />
+        </StandaloneCar>
+      </RightContainer>
+    </TopSectionContainer>
+  )
 }

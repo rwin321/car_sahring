@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import LogoImage from '../../../assets/images/car-logo.png'
-import styled from "styled-components";
-import tw from "twin.macro";
+import styled from 'styled-components'
+import tw from 'twin.macro'
 
 const LogoContainer = styled.div`
   ${tw`
@@ -39,11 +39,11 @@ const Logo = () => {
   return (
     <LogoContainer>
       <Image>
-        <img src={LogoImage}/>
+        <img src={LogoImage} />
         <LogoText>Yourcar.</LogoText>
       </Image>
     </LogoContainer>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo

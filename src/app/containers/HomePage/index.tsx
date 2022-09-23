@@ -1,6 +1,10 @@
-import React from 'react';
+import React from 'react'
 import styled from 'styled-components'
-import tw from "twin.macro";
+import tw from 'twin.macro'
+import { TopSection } from './topSection'
+import NavBar from '../../components/navbar'
+import BookCard from '../../components/bookCard'
+import Spacer from '../../components/spacer'
 
 const PageContainer = styled.div`
   ${tw`
@@ -11,12 +15,15 @@ const PageContainer = styled.div`
     items-center
     overflow-x-hidden
   `}
-`;
+`
 
 export const HomePage = () => {
   return (
     <PageContainer>
-      Hello world
+      <NavBar />
+      <TopSection />
+      <Spacer direction="vertical" value="3em" />
+      <BookCard />
     </PageContainer>
   )
 }
