@@ -1,10 +1,9 @@
-import React from 'react'
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import MclarenCarImg from '../../../assets/images/mclaren-orange-big.png'
-import BlobImg from '../../../assets/images/blob.svg'
-import { SCREENS } from '../../components/responsive'
-import Button from '../../components/button'
+import MclarenCarImg from 'assets/images/dodge-big.png'
+import BlobImg from 'assets/images/blob.svg'
+import { SCREENS } from 'app/components/responsive'
+import Button from 'app/components/button'
 
 const TopSectionContainer = styled.div`
   min-height: 300px;
@@ -61,10 +60,8 @@ const Description = styled.p`
     lg:text-sm
     xl:text-lg
     sm:max-h-full
-    overflow-hidden
     max-h-12
     text-gray-800
-   
   `}
 `
 
@@ -94,8 +91,8 @@ const BlobContainer = styled.div`
   }
 
   @media (min-width: ${SCREENS.xl}) {
-    width: 65em;
-    max-height: 30em;
+    width: 55em;
+    max-height: 25em;
     right: -15em;
     top: -19em;
     transform: rotate(-20deg);
@@ -116,20 +113,20 @@ const StandaloneCar = styled.div`
   top: -5em;
 
   @media (min-width: ${SCREENS.sm}) {
-    height: 16em;
-    right: -6em;
+    height: 11em;
+    right: -5em;
     top: -6em;
   }
 
   @media (min-width: ${SCREENS.lg}) {
-    height: 21em;
+    height: 18em;
     right: -9em;
     top: -5em;
   }
 
   @media (min-width: ${SCREENS.xl}) {
-    height: 28em;
-    right: -13em;
+    height: 24em;
+    right: -15em;
     top: -8em;
   }
 
@@ -151,7 +148,7 @@ export const TopSection = () => {
   return (
     <TopSectionContainer>
       <LeftContainer>
-        <Slogan>Rent The Best Quality Car's with Us</Slogan>
+        <Slogan>Find The Best Quality Car Rent With Us</Slogan>
         <Description>
           You have an opportunity to choose any car from budget ones to the newest modern sport cars
           for the best price on the market!

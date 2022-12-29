@@ -24,7 +24,7 @@ const BaseButton = styled.div`
   `}
 `
 
-const OutlinedButton = styled(BaseButton)`
+const FilledButton = styled(BaseButton)`
   ${tw`
     bg-yellow-500
     hover:bg-transparent
@@ -33,7 +33,7 @@ const OutlinedButton = styled(BaseButton)`
   `}
 `
 
-const FilledButton = styled(BaseButton)`
+const OutlinedButton = styled(BaseButton)`
   ${tw`
     border-yellow-500
     text-yellow-500
@@ -45,14 +45,14 @@ const FilledButton = styled(BaseButton)`
 `
 
 const Button = (props: IButtonProps) => {
-  const { theme, text = '' } = props
+  const { theme, className, text = '' } = props
 
   if (theme === 'outlined') {
-    return <OutlinedButton>{text}</OutlinedButton>
+    return <OutlinedButton className={className}>{text}</OutlinedButton>
   } else if (theme === 'filled') {
-    return <FilledButton>{text}</FilledButton>
+    return <FilledButton className={className}>{text}</FilledButton>
   } else {
-    return <BaseButton>{text}</BaseButton>
+    return <BaseButton className={className}>{text}</BaseButton>
   }
 }
 

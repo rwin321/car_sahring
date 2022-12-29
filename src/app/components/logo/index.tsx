@@ -1,7 +1,17 @@
 import React from 'react'
-import LogoImage from '../../../assets/images/car-logo.png'
+import LogoImage from 'assets/images/car-logo.png'
 import styled from 'styled-components'
 import tw from 'twin.macro'
+
+export enum ColorEnum {
+  WHITE = 'WHITE',
+  DARK = 'DARK',
+}
+
+interface ILogoProps {
+  textColor?: ColorEnum
+  bgColor?: ColorEnum
+}
 
 const LogoContainer = styled.div`
   ${tw`
@@ -10,7 +20,7 @@ const LogoContainer = styled.div`
   `}
 `
 
-const LogoText = styled.div`
+const LogoText = styled.div<{ textColor?: ColorEnum }>`
   ${tw`
     text-xl
     md:text-2xl
@@ -18,9 +28,11 @@ const LogoText = styled.div`
     text-black
     m-1
   `}
+  ${({ textColor }: { textColor?: ColorEnum }) =>
+    textColor && textColor === ColorEnum.WHITE && tw`text-white`}
 `
 
-const Image = styled.div`
+const Image = styled.div<{ bgColor?: ColorEnum }>`
   width: auto;
 
   ${tw`
@@ -29,18 +41,22 @@ const Image = styled.div`
     h-6
     md:h-9
   `}
+
   img {
+    ${({ bgColor }) => bgColor && bgColor === ColorEnum.DARK && tw`bg-black`}
     width: auto;
     height: 100%;
   }
 `
 
-const Logo = () => {
+const Logo = (props: ILogoProps) => {
+  const { textColor, bgColor } = props
+
   return (
     <LogoContainer>
-      <Image>
+      <Image bgColor={bgColor}>
         <img src={LogoImage} />
-        <LogoText>Yourcar.</LogoText>
+        <LogoText textColor={textColor}>Smartcar</LogoText>
       </Image>
     </LogoContainer>
   )
