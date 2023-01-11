@@ -1,12 +1,17 @@
 import Car from 'app/components/car'
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import { ICar } from 'typings/car'
 import Carousel, { Dots, slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { SCREENS } from 'app/components/responsive'
+import carService from 'app/services/carService'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { setTopCars } from 'app/containers/HomePage/homeSlice'
+import { TopCarsDTO } from 'app/containers/HomePage/types'
+import { selectTopCars } from 'app/containers/HomePage/selectors'
+import Loader from 'app/components/Loader'
 
 const TopCarsContainer = styled.div`
   ${tw`
@@ -42,88 +47,108 @@ const CarsContainer = styled.div`
     md:mt-10
   `}
 `
-const Mock: ICar = {
-  thumbnailSrc: 'https://www.freepnglogos.com/uploads/bmw-png/bmw-series-executive-taxis-25.png',
-  name: 'BMW',
-  gearType: 'Auto',
-  gas: 'Petrol',
-  monthlyPrice: 1600,
-  dailyPrice: 70,
-  mileage: '10k',
-}
 
-const Mock2: ICar = {
-  thumbnailSrc: 'https://www.freepnglogos.com/uploads/bmw-png/bmw-series-executive-taxis-25.png',
-  name: 'BMW 2',
-  gearType: 'Mech',
-  gas: 'Petrol',
-  monthlyPrice: 1450,
-  dailyPrice: 55,
-  mileage: '20k',
-}
+const EmptyCarsState = styled.div`
+  ${tw`
+    w-full
+    flex
+    justify-center
+    items-center
+    text-sm
+    text-gray-500
+  `}
+`
 
 const TopCars = () => {
   const [current, setCurrent] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+  const topCars = useAppSelector(selectTopCars)
+
+  const handleSetCars = (cars: TopCarsDTO) => {
+    dispatch(setTopCars(cars))
+  }
 
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm })
 
-  const mockedCars = [
-    <Car {...Mock} />,
-    <Car {...Mock2} />,
-    <Car {...Mock} />,
-    <Car {...Mock2} />,
-    <Car {...Mock} />,
-  ]
+  const fetchTopCars = async () => {
+    try {
+      setIsLoading(true)
+      const cars = await carService.getCars()
+      await handleSetCars(cars)
+      setIsLoading(false)
+    } catch (err) {
+      setIsLoading(false)
+      throw err
+    }
+  }
+
   const onChange = (value: number) => {
     setCurrent(value)
+  }
+
+  const topCarsSlides = topCars?.map((car) => (
+    <Car key={car.id} {...car} thumbnailSrc={car.thumbnailUrl} />
+  ))
+
+  useEffect(() => {
+    fetchTopCars()
+  }, [])
+
+  if (!topCars) {
+    return <div>Loading</div>
   }
 
   return (
     <TopCarsContainer>
       <Title>Explore Our Top Deals</Title>
-      <CarsContainer>
-        <Carousel
-          value={current}
-          onChange={onChange}
-          slides={mockedCars}
-          plugins={[
-            'clickToChange',
-            {
-              resolve: slidesToShowPlugin,
-              options: {
-                numberOfSlides: 3,
+      {isLoading && <Loader />}
+      {!topCars?.length && <EmptyCarsState>No cars to show</EmptyCarsState>}
+      {!!topCarsSlides?.length && (
+        <CarsContainer>
+          <Carousel
+            value={current}
+            onChange={onChange}
+            slides={topCarsSlides}
+            plugins={[
+              'clickToChange',
+              {
+                resolve: slidesToShowPlugin,
+                options: {
+                  numberOfSlides: 3,
+                },
               },
-            },
-          ]}
-          breakpoints={{
-            640: {
-              plugins: [
-                {
-                  resolve: slidesToShowPlugin,
-                  options: {
-                    numberOfSlides: 1,
+            ]}
+            breakpoints={{
+              640: {
+                plugins: [
+                  {
+                    resolve: slidesToShowPlugin,
+                    options: {
+                      numberOfSlides: 1,
+                    },
                   },
-                },
-              ],
-            },
-            900: {
-              plugins: [
-                {
-                  resolve: slidesToShowPlugin,
-                  options: {
-                    numberOfSlides: 2,
+                ],
+              },
+              900: {
+                plugins: [
+                  {
+                    resolve: slidesToShowPlugin,
+                    options: {
+                      numberOfSlides: 2,
+                    },
                   },
-                },
-              ],
-            },
-          }}
-        />
-        <Dots
-          value={current}
-          onChange={onChange}
-          number={isMobile ? mockedCars.length : Math.ceil(mockedCars.length / 3)}
-        />
-      </CarsContainer>
+                ],
+              },
+            }}
+          />
+          <Dots
+            value={current}
+            onChange={onChange}
+            number={isMobile ? topCars.length : Math.ceil(topCars.length / 3)}
+          />
+        </CarsContainer>
+      )}
     </TopCarsContainer>
   )
 }
